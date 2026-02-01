@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     // Update scene status
     await supabaseAdmin
-      .from('scenes')
+      .from('cloner_scenes')
       .update({ status_video: 'generating' })
       .eq('id', sceneId);
 
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       
       if (videoUrl) {
         await supabaseAdmin
-          .from('scenes')
+          .from('cloner_scenes')
           .update({ 
             status_video: 'completed',
             scene_video_url: videoUrl 
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
       
       if (videoUrl && sceneId) {
         await supabaseAdmin
-          .from('scenes')
+          .from('cloner_scenes')
           .update({ 
             status_video: 'completed',
             scene_video_url: videoUrl 

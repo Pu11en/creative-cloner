@@ -34,7 +34,7 @@ export default function Home() {
 
   const loadProjects = async () => {
     const { data } = await supabase
-      .from('projects')
+      .from('cloner_projects')
       .select('*')
       .order('created_at', { ascending: false });
     setProjects(data || []);
@@ -42,7 +42,7 @@ export default function Home() {
 
   const loadScenes = async (projectId: string) => {
     const { data } = await supabase
-      .from('scenes')
+      .from('cloner_scenes')
       .select('*')
       .eq('project_id', projectId)
       .order('scene_number');
@@ -90,7 +90,7 @@ export default function Home() {
 
       // Create project in database
       const { data: project, error } = await supabase
-        .from('projects')
+        .from('cloner_projects')
         .insert({
           id: projectId,
           project_name: projectName,
@@ -148,7 +148,7 @@ export default function Home() {
       const updatedScenes = await new Promise<Scene[]>((resolve) => {
         setTimeout(async () => {
           const { data } = await supabase
-            .from('scenes')
+            .from('cloner_scenes')
             .select('*')
             .eq('project_id', selectedProject.id)
             .order('scene_number');
@@ -181,7 +181,7 @@ export default function Home() {
       await new Promise(r => setTimeout(r, 5000)); // Wait for image generation
       
       const { data: scenesWithImages } = await supabase
-        .from('scenes')
+        .from('cloner_scenes')
         .select('*')
         .eq('project_id', selectedProject.id)
         .order('scene_number');
@@ -205,7 +205,7 @@ export default function Home() {
 
       // Update project status
       await supabase
-        .from('projects')
+        .from('cloner_projects')
         .update({ status: 'completed' })
         .eq('id', selectedProject.id);
 

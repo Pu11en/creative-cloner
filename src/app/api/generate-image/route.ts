@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     // Update scene status
     await supabaseAdmin
-      .from('scenes')
+      .from('cloner_scenes')
       .update({ status_image: 'generating' })
       .eq('id', sceneId);
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       
       if (imageUrl) {
         await supabaseAdmin
-          .from('scenes')
+          .from('cloner_scenes')
           .update({ 
             status_image: 'completed',
             start_image_url: imageUrl 
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     console.error('Image generation error:', error);
     
     await supabaseAdmin
-      .from('scenes')
+      .from('cloner_scenes')
       .update({ status_image: 'error' })
       .eq('id', request.json().then(d => d.sceneId).catch(() => ''));
     
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
       
       if (imageUrl && sceneId) {
         await supabaseAdmin
-          .from('scenes')
+          .from('cloner_scenes')
           .update({ 
             status_image: 'completed',
             start_image_url: imageUrl 

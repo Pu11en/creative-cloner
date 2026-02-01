@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     // Update project status
     await supabaseAdmin
-      .from('projects')
+      .from('cloner_projects')
       .update({ status: 'analyzing' })
       .eq('id', projectId);
 
@@ -148,7 +148,7 @@ ${analysisPrompt}` },
 
     // Update project with analysis results
     await supabaseAdmin
-      .from('projects')
+      .from('cloner_projects')
       .update({
         status: 'generating_prompts',
         music_prompt: analysis.music_prompt,
@@ -167,11 +167,11 @@ ${analysisPrompt}` },
       status_video: 'pending',
     }));
 
-    await supabaseAdmin.from('scenes').insert(scenesData);
+    await supabaseAdmin.from('cloner_scenes').insert(scenesData);
 
     // Update project status
     await supabaseAdmin
-      .from('projects')
+      .from('cloner_projects')
       .update({ status: 'generating_images' })
       .eq('id', projectId);
 
