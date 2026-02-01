@@ -5,9 +5,15 @@ export interface Project {
   input_image_1_url: string | null;
   input_image_2_url: string | null;
   input_request: string;
+  source_brand: string | null;
+  target_brand: string | null;
+  product_description: string | null;
+  creative_direction: string | null;
   aspect_ratio: '16:9' | '9:16' | '1:1';
   music_prompt: string | null;
+  music_url: string | null;
   script: string | null;
+  generate_music: boolean;
   status: 'pending' | 'analyzing' | 'generating_prompts' | 'generating_images' | 'generating_videos' | 'completed' | 'error';
   created_at: string;
   updated_at: string;

@@ -5,7 +5,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY!;
 
 export async function POST(request: NextRequest) {
   try {
-    const { projectId, videoUrl, userPrompt } = await request.json();
+    const { projectId, videoUrl, userPrompt, sourceBrand, targetBrand } = await request.json();
 
     // Update project status
     await supabaseAdmin
@@ -13,10 +13,15 @@ export async function POST(request: NextRequest) {
       .update({ status: 'analyzing' })
       .eq('id', projectId);
 
-    // Analyze video with Gemini
-    const analysisPrompt = `You are an expert video analyst. Analyze this video and extract scenes for recreation.
+    // Build context for brand transformation
+    const brandContext = sourceBrand && targetBrand 
+      ? `\n\nBRAND TRANSFORMATION: This is a "${sourceBrand}" style ad being recreated for "${targetBrand}". Adapt all visual descriptions, product references, and styling to match the ${targetBrand} brand aesthetic.`
+      : '';
 
-User's request: ${userPrompt}
+    // Analyze video with Gemini
+    const analysisPrompt = `You are an expert video analyst and advertising creative director. Analyze this video and extract scenes for recreation.
+
+User's request: ${userPrompt}${brandContext}
 
 IMPORTANT: Output ONLY valid JSON, no markdown code blocks.
 

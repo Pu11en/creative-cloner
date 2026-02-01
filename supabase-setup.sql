@@ -1,4 +1,6 @@
 -- Creative Cloner Database Schema
+-- Run this in Supabase Dashboard → SQL Editor
+-- https://supabase.com/dashboard/project/swvljsixpvvcirjmflze/sql/new
 
 -- Projects table
 CREATE TABLE IF NOT EXISTS projects (
@@ -8,9 +10,18 @@ CREATE TABLE IF NOT EXISTS projects (
   input_image_1_url TEXT,
   input_image_2_url TEXT,
   input_request TEXT NOT NULL,
+  -- Branding fields
+  source_brand TEXT,
+  target_brand TEXT,
+  product_description TEXT,
+  creative_direction TEXT,
+  -- Output fields
   aspect_ratio TEXT DEFAULT '16:9' CHECK (aspect_ratio IN ('16:9', '9:16', '1:1')),
   music_prompt TEXT,
+  music_url TEXT,
   script TEXT,
+  generate_music BOOLEAN DEFAULT true,
+  -- Status
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'analyzing', 'generating_prompts', 'generating_images', 'generating_videos', 'completed', 'error')),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -41,9 +52,7 @@ ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scenes ENABLE ROW LEVEL SECURITY;
 
 -- Policies (allow all for now - add auth later)
+DROP POLICY IF EXISTS "Allow all on projects" ON projects;
+DROP POLICY IF EXISTS "Allow all on scenes" ON scenes;
 CREATE POLICY "Allow all on projects" ON projects FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all on scenes" ON scenes FOR ALL USING (true) WITH CHECK (true);
-
--- Storage buckets (run these manually in Supabase dashboard or via API)
--- INSERT INTO storage.buckets (id, name, public) VALUES ('videos', 'videos', true);
--- INSERT INTO storage.buckets (id, name, public) VALUES ('images', 'images', true);
