@@ -47,7 +47,7 @@ export default function Home() {
     if (selectedProject && isProcessing) {
       const interval = setInterval(async () => {
         const { data: project } = await supabase
-          .from('projects')
+          .from('cloner_projects')
           .select('*')
           .eq('id', selectedProject.id)
           .single();
@@ -68,7 +68,7 @@ export default function Home() {
 
   const loadProjects = async () => {
     const { data } = await supabase
-      .from('projects')
+      .from('cloner_projects')
       .select('*')
       .order('created_at', { ascending: false });
     setProjects(data || []);
@@ -76,7 +76,7 @@ export default function Home() {
 
   const loadScenes = async (projectId: string) => {
     const { data } = await supabase
-      .from('scenes')
+      .from('cloner_scenes')
       .select('*')
       .eq('project_id', projectId)
       .order('scene_number');
@@ -151,7 +151,7 @@ export default function Home() {
       const userPrompt = buildPrompt();
 
       const { data: project, error } = await supabase
-        .from('projects')
+        .from('cloner_projects')
         .insert({
           id: projectId,
           project_name: projectName,
@@ -237,7 +237,7 @@ export default function Home() {
       // Step 3: Generate images
       setProcessingStep('Generating images...');
       const { data: scenesData } = await supabase
-        .from('scenes')
+        .from('cloner_scenes')
         .select('*')
         .eq('project_id', selectedProject.id)
         .order('scene_number');
@@ -267,7 +267,7 @@ export default function Home() {
       await new Promise(r => setTimeout(r, 10000)); // Wait for images
       
       const { data: scenesWithImages } = await supabase
-        .from('scenes')
+        .from('cloner_scenes')
         .select('*')
         .eq('project_id', selectedProject.id)
         .order('scene_number');
@@ -291,7 +291,7 @@ export default function Home() {
 
       // Update project status
       await supabase
-        .from('projects')
+        .from('cloner_projects')
         .update({ status: 'completed' })
         .eq('id', selectedProject.id);
 
@@ -300,7 +300,7 @@ export default function Home() {
       
       // Refresh project
       const { data: updatedProject } = await supabase
-        .from('projects')
+        .from('cloner_projects')
         .select('*')
         .eq('id', selectedProject.id)
         .single();
@@ -311,7 +311,7 @@ export default function Home() {
       setProcessingStep(`Error: ${error.message}`);
       
       await supabase
-        .from('projects')
+        .from('cloner_projects')
         .update({ status: 'error' })
         .eq('id', selectedProject.id);
     } finally {

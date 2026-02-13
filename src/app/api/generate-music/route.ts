@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       const musicUrl = data.data?.audio_url || data.audio_url;
       
       await supabaseAdmin
-        .from('projects')
+        .from('cloner_projects')
         .update({ music_url: musicUrl })
         .eq('id', projectId);
       
@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
       
       if (musicUrl && projectId) {
         await supabaseAdmin
-          .from('projects')
+          .from('cloner_projects')
           .update({ music_url: musicUrl })
           .eq('id', projectId);
       }

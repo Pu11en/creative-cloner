@@ -2,8 +2,8 @@
 -- Run this in Supabase Dashboard → SQL Editor
 -- https://supabase.com/dashboard/project/swvljsixpvvcirjmflze/sql/new
 
--- Projects table
-CREATE TABLE IF NOT EXISTS projects (
+-- Cloner Projects table
+CREATE TABLE IF NOT EXISTS cloner_projects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   project_name TEXT NOT NULL,
   input_video_url TEXT,
@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS projects (
 );
 
 -- Scenes table
-CREATE TABLE IF NOT EXISTS scenes (
+CREATE TABLE IF NOT EXISTS cloner_scenes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
+  project_id UUID REFERENCES cloner_projects(id) ON DELETE CASCADE,
   scene_number INTEGER NOT NULL,
   scene_title TEXT NOT NULL,
   start_image_prompt TEXT,
@@ -44,15 +44,13 @@ CREATE TABLE IF NOT EXISTS scenes (
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_scenes_project_id ON scenes(project_id);
-CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
+CREATE INDEX IF NOT EXISTS idx_cloner_scenes_project_id ON cloner_scenes(project_id);
+CREATE INDEX IF NOT EXISTS idx_cloner_projects_status ON cloner_projects(status);
 
--- Enable RLS (but allow all for now)
-ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
-ALTER TABLE scenes ENABLE ROW LEVEL SECURITY;
+-- Enable RLS
+ALTER TABLE cloner_projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cloner_scenes ENABLE ROW LEVEL SECURITY;
 
--- Policies (allow all for now - add auth later)
-DROP POLICY IF EXISTS "Allow all on projects" ON projects;
-DROP POLICY IF EXISTS "Allow all on scenes" ON scenes;
-CREATE POLICY "Allow all on projects" ON projects FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all on scenes" ON scenes FOR ALL USING (true) WITH CHECK (true);
+-- Policies
+CREATE POLICY "Allow all on cloner_projects" ON cloner_projects FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on cloner_scenes" ON cloner_scenes FOR ALL USING (true) WITH CHECK (true);
