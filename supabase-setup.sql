@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS projects (
   product_description TEXT,
   creative_direction TEXT,
   -- Output fields
-  aspect_ratio TEXT DEFAULT '16:9' CHECK (aspect_ratio IN ('16:9', '9:16', '1:1')),
+  aspect_ratio TEXT DEFAULT '9:16' CHECK (aspect_ratio IN ('16:9', '9:16', '4:5', '1:1')),
   music_prompt TEXT,
   music_url TEXT,
   script TEXT,

@@ -29,7 +29,7 @@ export default function Home() {
   const [targetBrand, setTargetBrand] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [creativeDirection, setCreativeDirection] = useState('');
-  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '4:5' | '1:1'>('4:5');
+  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '4:5' | '1:1'>('9:16');
   const [generateMusic, setGenerateMusic] = useState(true);
 
   useEffect(() => {
