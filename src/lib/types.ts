@@ -9,7 +9,7 @@ export interface Project {
   target_brand: string | null;
   product_description: string | null;
   creative_direction: string | null;
-  aspect_ratio: '16:9' | '9:16' | '1:1';
+  aspect_ratio: '16:9' | '9:16' | '4:5' | '1:1';
   music_prompt: string | null;
   music_url: string | null;
   script: string | null;

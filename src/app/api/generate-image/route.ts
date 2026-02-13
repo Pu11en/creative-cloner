@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     // Build request body for Nano Banana Pro
     const requestBody: any = {
       prompt,
-      size: aspectRatio === '16:9' ? '1280x720' : aspectRatio === '9:16' ? '720x1280' : '1024x1024',
+      size: aspectRatio === '16:9' ? '1280x720' : aspectRatio === '9:16' ? '720x1280' : aspectRatio === '4:5' ? '864x1080' : '1024x1024',
       num_images: 1,
     };
 

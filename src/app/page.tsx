@@ -29,7 +29,7 @@ export default function Home() {
   const [targetBrand, setTargetBrand] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [creativeDirection, setCreativeDirection] = useState('');
-  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '1:1'>('9:16');
+  const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16' | '4:5' | '1:1'>('4:5');
   const [generateMusic, setGenerateMusic] = useState(true);
 
   useEffect(() => {
@@ -512,7 +512,7 @@ export default function Home() {
                 <div className="flex gap-3 items-center">
                   {/* Aspect Ratio */}
                   <div className="flex gap-1 bg-gray-800 rounded-lg p-1">
-                    {(['16:9', '9:16', '1:1'] as const).map((ratio) => (
+                    {(['16:9', '9:16', '4:5', '1:1'] as const).map((ratio) => (
                       <button
                         key={ratio}
                         onClick={() => setAspectRatio(ratio)}
